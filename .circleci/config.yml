@@ -10,8 +10,8 @@ jobs:
       - run:
           name: Deploying to GitHub Pages
           command: |
-            git config --global user.email "billie66@users.noreply.github.com"
-            git config --global user.name "billie66"
+            git config --global user.email "robot@users.noreply.github.com"
+            git config --global user.name "website deploy script"
             yarn install && yarn build
             echo '------'
             ls && cd /home/circleci && ls
