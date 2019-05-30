@@ -1,0 +1,30 @@
+version: 2
+
+jobs:
+  deploy:
+    docker:
+      - image: circleci/node:10.15.0
+
+    steps:
+      - checkout
+      - run:
+          name: Deploying to GitHub Pages
+          command: |
+            git config --global user.email "billie66@users.noreply.github.com"
+            git config --global user.name "billie66"
+            yarn install && yarn build
+            ls && cd /home/circleci && ls
+            git clone git@github.com:gatsbyci/gatsbyci.github.io.git gatsbyci
+            rm -rf ./gatsbyci/* && ls ./gatsbyci
+            cp -rf ./project/public/* ./gatsbyci && ls ./gatsbyci
+            cd ./gatsbyci && git add . && git commit -a -m 'org build version' && git push
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
